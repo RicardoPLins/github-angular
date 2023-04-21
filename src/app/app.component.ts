@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Usuario} from '../shared/model/usuario';
+import { Component } from '@angular/core';
+import {Jogadores} from './model/jogadores';
 
 @Component({
   selector: 'app-root',
@@ -7,18 +7,32 @@ import {Usuario} from '../shared/model/usuario';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  titulo = 'Social IFPB';
-  usuario: Usuario;
-  usuarios: Array<Usuario>;
+  title = 'primeiro-angular-jogadores';
 
+  jogadorDeManutencao: Jogadores;
+  jogadores: Array<Jogadores>;
   constructor() {
-    this.usuario = new Usuario();
-    this.usuarios = new Array<Usuario>();
+    this.jogadorDeManutencao = new Jogadores('', 0);
+    this.jogadores = [
+      new Jogadores('Lebron James', 6, 'Los Angeles Lakers'),
+      new Jogadores('Stephen Curry', 30, 'Golden State Warrior'),
+      new Jogadores('JA MORANT', 12, 'Memphis Grizzlies')
+    ];
   }
 
-  inserirUsuario(): void {
-    this.usuarios.push(this.usuario);
-    this.usuario = new Usuario();
+  cadastrar(): void {
+    this.jogadores.push(this.jogadorDeManutencao);
+    this.jogadorDeManutencao = new Jogadores();
   }
 
+  excluir(jogadorARemover: Jogadores): void {
+    const indx = this.jogadores.findIndex(usuario =>
+      usuario.nome === jogadorARemover.nome);
+
+    this.jogadores.splice(indx, 1);
+  }
+
+  editar(jogador: Jogadores): void {
+    this.jogadorDeManutencao = jogador;
+  }
 }
